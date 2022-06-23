@@ -1,0 +1,56 @@
+;Function to Form a Matrix
+(define (matrix mValue nValue)
+  (let outLoop ((X mValue) (column '())  )
+    (if (= X 0) column (outLoop (- X 1) ;Outer loop if
+        (cons  (let inLoop ((Y nValue) (row '())  )
+        (if    (= Y 0)row(inLoop (- Y 1)  ;Inner loop if
+               (cons (if (= X Y) Y X) row))))column  )
+      )
+    )
+  )
+)
+
+
+;Transposing of the Matrix
+(define (transposeMatrix X)
+  (if (null? (car X))
+    '()
+      (cons (map car X)
+      (transposeMatrix (map cdr X)) 
+      )
+  )
+)
+
+;Function to properly display the matrix output
+(define (displayMatrix B)
+
+  (cond ((null? B)
+    '())
+    (else
+      (display (car B))
+      (newline)
+
+      (displayMatrix (cdr B))
+    )
+
+  )
+)
+
+
+
+(display "How many lists? Value M :")
+(define mValue (read))
+(display "The length of each list? Value N :")
+(define nValue (read))
+
+(define ogMatrix (matrix mValue nValue))
+(displayMatrix ogMatrix)
+(newline)
+
+
+(newline)
+(display "The matrix transposed now looks like...")
+(newline)
+(define tMatrix(transposeMatrix ogMatrix))
+
+(displayMatrix tMatrix)
